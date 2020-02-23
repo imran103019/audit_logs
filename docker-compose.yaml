@@ -1,0 +1,31 @@
+version: '2.1'
+
+services:
+  app:
+    container_name: app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file: .env
+    restart: always
+    depends_on:
+      mysql:
+          condition: service_healthy
+    ports:
+      - "8081:8080"    
+  mysql:
+    container_name: mysql
+    build:
+      context: .
+      dockerfile: mysql/Dockerfile
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+      - ./mysql/init/:/docker-entrypoint-initdb.d/
+    environment:
+      MYSQL_DATABASE: audit_logs
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user
+      TZ: "Asia/Dhaka"  
+    healthcheck:
+        test: "echo OK"
