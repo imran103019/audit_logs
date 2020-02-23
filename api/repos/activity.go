@@ -75,7 +75,13 @@ func (a *ActivityRepo) UpdateActivity(activity *dtos.ActivityRequest, id int) er
 		Where("a.id = ?", id).
 		Updates(map[string]interface{}{
 			"description": activity.Description,
-			"data": activity.Data,
+			"data":        activity.Data,
+			"old_value":   activity.OldValue,
+			"new_value":   activity.NewValue,
+			"type":        activity.Type,
+			"entity_type": activity.EntityType,
+			"entity_id":   activity.EntityId,
+			"field":       activity.Field,
 		}).Error
 	if err != nil {
 		return err
