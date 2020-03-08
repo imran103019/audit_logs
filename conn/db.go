@@ -6,6 +6,7 @@ import (
 	"fmt"
 	// mysql dialects need to be imported separately
 	_ "github.com/jinzhu/gorm/dialects/mysql"
+	log "github.com/sirupsen/logrus"
 )
 
 // DB holds the database instace
@@ -20,7 +21,7 @@ func (db *DB) Connect(cfg *config.Database) error {
 	d, err := gorm.Open("mysql", uri)
 
 	if err != nil {
-		fmt.Print(err)
+		log.Error("Failed to open Mysql DB connection: ",err.Error())
 		return err
 	}
 	db.DB = d

@@ -9,7 +9,8 @@ import (
 
 func Run() {
 	conn.Connect()
-	//conn.Ping()
+	conn.ConnectRedis()
+	// conn.Ping()
 	apiRouter := route.Init()
 	apiRouter.Logger.Fatal(apiRouter.Start(viper.GetString("APP_PORT")))
 }
